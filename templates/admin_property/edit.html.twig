@@ -5,7 +5,14 @@
 {% block body %}
 
 <div class="container mt-4">
-    <h1>Éditer une affaire</h1><br><br><br>
+
+    {% if editMode %}
+        <h1>Éditer une affaire</h1><br><br><br>
+    {% else %}
+    <h1>Créer une affaire</h1><br><br><br>
+    {% endif %}
+
+    
     {{ form_start(form) }}
     <div class="row">
         <div class="col-md-4">{{ form_row(form.title)}}</div>
@@ -26,7 +33,14 @@
     </div>
 
     {{ form_widget(form) }}
-    <button class="btn btn-success">Éditer</button>
+
+    <button class="btn btn-success">
+        {% if editMode %}
+        Enregistrer les modifications</button>
+        {% else %}
+        Créer une affaire
+        {% endif %}
+
     {{ form_end(form) }}
 </div>
 {% endblock %}

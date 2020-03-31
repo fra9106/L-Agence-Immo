@@ -4,8 +4,11 @@
 
 {% block body %}
     <div class="container mt-4">
+    
         <h1>Nos affaires :</h1>
-
+    
+            <a href="{{ path('admin.property.new') }}" class="btn btn-primary">Créer une affaire</a><br>
+    
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -18,8 +21,13 @@
                 <tr>
                     <td>{{property.title}}</td>
                     <td>
-                        <a href="{{ path('admin.property.edit', {id: property.id}) }}" class="btn btn-success">Éditer</a>
+                        <a href="{{ path('admin.property.edit', {id: property.id}) }}" class="btn btn-success">Éditer/Modifier</a>
+                        <form method="post" action="{{ path('admin.property.delete', {id: property.id}) }}" style="display: inline-block">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
                     </td>
+                    
                 </tr>
                 {% endfor %}
             </tbody>
