@@ -73,12 +73,14 @@ class AdminPropertyController extends AbstractController
     /**
      * @Route("/admin/property/{id}", name="admin.property.delete", methods="DELETE")
      */
-    public function delete(Property $property)
+    public function delete(Property $property, Request $request)
     {
-        
-        
-            $this->em->remove($property);
-            $this->em->flush();
+        if ($this->isCsrfTokenValid('delete'. $property->getId(), $request->get('_token')))
+            {
+                $this->em->remove($property);
+                $this->em->flush(); 
+            }
+            
             return $this->redirectToRoute('admin.property.index');
         
         
