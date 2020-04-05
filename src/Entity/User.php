@@ -43,6 +43,11 @@ class User implements UserInterface // interface pour encoder le mdp de user
 
     public $confirm_password;
 
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -100,9 +105,18 @@ class User implements UserInterface // interface pour encoder le mdp de user
 
     public function getSalt(){} //fonction vide obligatoire pour l'implémentation 
 
-    public function getRoles() //fonction obligatoire pour l'implémentation 
+    public function getRoles(): array //chek les rôles dans les users à la connexion 
     {
-        return ['ROLE_USER'];
+       $roles = $this->roles;
+       $roles[] = 'ROLE_USER'; //par défaut chaque user à un ROLE_USER
+       return array_unique($roles);
+    }
+
+    public function setRoles(string $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
 }
